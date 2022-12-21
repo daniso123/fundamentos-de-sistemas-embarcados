@@ -54,6 +54,9 @@ O log dos comandos acionados dos dispositivos de saída se encontra na pasta `Ce
 
 ![Servidor Central](assets/menu.png)
 
+### Apresentação do trabalho 
+[Video](https://unbbr.sharepoint.com/sites/PA547/_layouts/15/stream.aspx?id=%2Fsites%2FPA547%2FDocumentos%20Compartilhados%2FGeneral%2FRecordings%2FTrabalho%201%2D20221221%5F112838%2DGrava%C3%A7%C3%A3o%20de%20Reuni%C3%A3o%2Emp4)
+
 ## Referências
 
 [DHT22](https://github.com/nebulx29/dht22)
