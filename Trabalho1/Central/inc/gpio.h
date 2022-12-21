@@ -13,19 +13,6 @@
 #define SC_IN 20
 #define SC_OUT 21
 
-/*
-#define SP_T 25
-#define SF_T 4
-#define SJ_T01 13
-#define SJ_T02 14
-#define SPo_T 12
-#define SC_IN 23
-#define SC_OUT 24
-#define SP_1 1
-#define SF_1 5
-#define SJ_101 21
-#define SJ_102 22
-*/
 
 typedef struct {
   int l01;
@@ -52,8 +39,7 @@ typedef struct {
 } DHT22;
 
 typedef struct {
-  DHT22 dht22GroundFloor;
-  DHT22 dht22FirstFloor;
+  DHT22 dht22Class1;
   DevicesOut devOut;
 } Data;
 

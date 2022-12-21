@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
-
-#include "menu.h"
-#include "gpio.h"
 #include "csv.h"
 #include "socket_quit.h"
+#include "app.h"
+#include "gpio.h"
+#include "menu.h"
+
+
+
 
 #define WIDTH 105
 #define HEIGHT 40
@@ -75,31 +78,17 @@ void printData(Data data) {
 	mvwprintw(window, 7, 41, data.devOut.ac == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(data.devOut.ac == 1 ? 3 : 2));
 
-  /*wattron(window, COLOR_PAIR(data.devOut.ac1 == 1 ? 3 : 2));
-	mvwprintw(window, 12, 41, data.devOut.ac1 == 1 ? "ON " : "OFF");
-	wattroff(window, COLOR_PAIR(data.devOut.ac1 == 1 ? 3 : 2));
-  */
-
   wattron(window, COLOR_PAIR(data.devOut.alarm == 1 ? 3 : 2));
 	mvwprintw(window, 13, 41, data.devOut.alarm == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(data.devOut.alarm == 1 ? 3 : 2));
 
   mvwprintw(window, 19, 2, "Temperatura - sala1: ");
   wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 19, 25, "%4.2f", data.dht22GroundFloor.temperature);
+  mvwprintw(window, 19, 25, "%4.2f", data.dht22Class1.temperature);
 	wattroff(window, COLOR_PAIR(1));
   mvwprintw(window, 20, 2, "Umidade - sala1: ");
 	wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 20, 25, "%4.2f", data.dht22GroundFloor.humidity);
-	wattroff(window, COLOR_PAIR(1));
-
-  mvwprintw(window, 19, 40, "Temperatura - sala 03 ");
-  wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 19, 70, "%4.2f", data.dht22FirstFloor.temperature);
-	wattroff(window, COLOR_PAIR(1));
-  mvwprintw(window, 20, 40, "Umidade     - sala 03 ");
-	wattron(window, COLOR_PAIR(1));
-  mvwprintw(window, 20, 70, "%4.2f", data.dht22FirstFloor.humidity);
+  mvwprintw(window, 20, 25, "%4.2f", data.dht22Class1.humidity);
 	wattroff(window, COLOR_PAIR(1));
 
 	mvwprintw(window, 25, 2, "Alarme Tocando: ");
@@ -126,32 +115,12 @@ void printDevicesIn(DevicesIn devIn) {
 	mvwprintw(window, 6, 89, devIn.sjan == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(devIn.sjan == 1 ? 3 : 2));
 
-  mvwprintw(window, 7, 50, "Sala 03 - Sensor de Janela 02:");
-	wattron(window, COLOR_PAIR(devIn.sjan == 1 ? 3 : 2));
-	mvwprintw(window, 7, 89, devIn.sjan == 1 ? "ON " : "OFF");
-	wattroff(window, COLOR_PAIR(devIn.sjan == 1 ? 3 : 2));
+
 
   mvwprintw(window, 8, 50, "Sala 01 - Sensor de Porta:");
 	wattron(window, COLOR_PAIR(devIn.spor == 1 ? 3 : 2));
 	mvwprintw(window, 8, 89, devIn.spor == 1 ? "ON " : "OFF");
 	wattroff(window, COLOR_PAIR(devIn.spor == 1 ? 3 : 2));
-
-mvwprintw(window, 8, 50, "Sala 03 - Sensor de Porta:");
-	wattron(window, COLOR_PAIR(devIn.spor == 1 ? 3 : 2));
-	mvwprintw(window, 8, 89, devIn.spor == 1 ? "ON " : "OFF");
-	wattroff(window, COLOR_PAIR(devIn.spor == 1 ? 3 : 2));
-
-  mvwprintw(window, 9, 50, "Sala 03 - Sensor de Presenca:");
-	wattron(window, COLOR_PAIR(devIn.spres == 1 ? 3 : 2));
-	mvwprintw(window, 9, 89, devIn.spres == 1 ? "ON " : "OFF");
-	wattroff(window, COLOR_PAIR(devIn.spres == 1 ? 3 : 2));
-
-  mvwprintw(window, 10, 50, "Sala 03- Sensor de Fumaca:");
-	wattron(window, COLOR_PAIR(devIn.sfum == 1 ? 3 : 2));
-	mvwprintw(window, 10, 89, devIn.sfum == 1 ? "ON " : "OFF");
-	wattroff(window, COLOR_PAIR(devIn.sfum == 1 ? 3 : 2));
-
-
 	mvwprintw(window, 25, 50, "Pessoas: ");
   wattron(window, COLOR_PAIR(1));
 	mvwprintw(window, 25, 59, devIn.peopleQuantity >= 10 ? "%d" : "0%d", devIn.peopleQuantity);
@@ -269,45 +238,33 @@ void* menuHandler() {
                         writeData(command3);
                         break;
                    
+    
                     case 4:
-                        if(devOut.ac){
-                            devOut.ac = 0;
-                        }
-                        else {
-                            devOut.ac = 1;
-                        }
-                        char *device4 = "Ar-Condicionado sala 02";
-                        Command command4;
-                        command4.device = device4;
-                        command4.state = devOut.ac;
-                        writeData(command4);
-                        break;
-                    case 5:
                         if(devOut.pr){
                             devOut.pr = 0;
                         }
                         else {
                             devOut.pr = 1;
                         }
-                        char *device5 = "Ativar o Projetor Multimídia";
-                        Command command5;
-                        command5.device = device5;
-                        command5.state = devOut.pr;
-                        writeData(command5);
+                        char *device4 = "Ativar o Projetor Multimídia";
+                        Command command4;
+                        command4.device = device4;
+                        command4.state = devOut.pr;
+                        writeData(command4);
                         break;
 
-                 case 6:
+                 case 5:
                         if(devOut.alarm){
                             devOut.alarm = 0;
                         }
                         else {
                             devOut.alarm = 1;
                         }
-                        char *device6 = "Ativar o Alarme";
-                        Command command6;
-                        command6.device = device6;
-                        command6.state = devOut.alarm;
-                        writeData(command6);
+                        char *device5 = "Ativar o Alarme";
+                        Command command5;
+                        command5.device = device5;
+                        command5.state = devOut.alarm;
+                        writeData(command5);
                         break;
                 }
 				storeDevicesOutUpdate(devOut);

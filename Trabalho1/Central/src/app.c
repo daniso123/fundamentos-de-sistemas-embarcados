@@ -5,6 +5,7 @@
 #include "menu.h"
 #include "tcp_client.h"
 #include "gpio.h"
+#include "app.h"
 
 #define SLEEP_TIME 1000000
 
@@ -14,8 +15,8 @@ void appInit() {
   DHT22 dht22;
   dht22.temperature = 0.0;
   dht22.humidity = 0.0;
-  appData.dht22GroundFloor = dht22;
-  appData.dht22FirstFloor = dht22;
+  appData.dht22Class1 = dht22;
+  
 }
 
 Data currentData() {
@@ -24,15 +25,11 @@ Data currentData() {
 
 void* appHandler() {
   while (1) {
-    DHT22 dht22GroundFloor = requestData(0);
+    DHT22 dht22Class1 = requestData(0);
     DHT22 dht22FirstFloor = requestData(1);
 
-    if (dht22GroundFloor.temperature > 0 && dht22GroundFloor.humidity > 0) {
-      appData.dht22GroundFloor = dht22GroundFloor;
-    }
-
-    if (dht22FirstFloor.temperature > 0 && dht22FirstFloor.humidity > 0) {
-      appData.dht22FirstFloor = dht22FirstFloor;
+    if (dht22Class1.temperature > 0 && dht22Class1.humidity > 0) {
+      appData.dht22Class1 = dht22Class1;
     }
 
     DevicesOut devOut;

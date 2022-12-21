@@ -11,7 +11,7 @@
 #include "alarm.h"
 #include "socket_quit.h"
 
-#define SERVER_DISTRIBUTED_IP "164.41.98.16" 
+#define SERVER_DISTRIBUTED_IP "164.41.98.15" 
 #define SERVER_DISTRIBUTED_1_PORT 10251
 #define SERVER_DISTRIBUTED_2_PORT 10260
 
