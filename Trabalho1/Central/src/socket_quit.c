@@ -4,6 +4,8 @@
 #include <signal.h>
 #include <ncurses.h>
 
+#include "socket_quit.h"
+
 void finish(int signal) {
   printf("Finzalização completa . . .\n");
   exit(0);

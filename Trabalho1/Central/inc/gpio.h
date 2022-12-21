@@ -12,7 +12,6 @@
 #define SPor 16
 #define SC_IN 20
 #define SC_OUT 21
-//#define DHT22 04
 
 /*
 #define SP_T 25
