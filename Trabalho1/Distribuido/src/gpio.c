@@ -6,19 +6,11 @@
 // Private functions signatures
 void checkPresence();
 void checkSmokeClass1();
-void checkSmokeClass3();
 void checkWindow1();
-void checkWindow2();
-//void checkWindow2Ground();
 void checkDoorClass1();
-void checkDoorClass3();
 void checkPeopleQuantityGround_IN();
 void checkPeopleQuantityGround_OUT();
-//void checkPresenceFirstFloor();
-//void checkSmokeFirstFloor();
 void checkpr();
-//void checkWindow2FirstFloor();
-
 
 // Main functions
 
@@ -33,21 +25,12 @@ void* gpioHandler() {
   pinMode(SFum, OUTPUT);
   wiringPiISR(SFum, INT_EDGE_BOTH, &checkSmokeClass1);
 
-  pinMode(SFum, OUTPUT);
-  wiringPiISR(SFum, INT_EDGE_BOTH, &checkSmokeClass3);
-
   pinMode(SJan, OUTPUT);
   wiringPiISR(SJan, INT_EDGE_BOTH, &checkWindow1);
 
-  pinMode(SJan, OUTPUT);
-  wiringPiISR(SJan, INT_EDGE_BOTH, &checkWindow2);
 
   pinMode(SPor, OUTPUT);
   wiringPiISR(SPor, INT_EDGE_BOTH, &checkDoorClass1);
-
-  pinMode(SPor, OUTPUT);
-  wiringPiISR(SPor, INT_EDGE_BOTH, &checkDoorClass3);
-
 
   pinMode(PR, OUTPUT);
   wiringPiISR(PR, INT_EDGE_BOTH, &checkpr);
@@ -80,10 +63,6 @@ void turnDevicesOff() {
   setDeviceState(L_02, LOW);
   setDeviceState(AC, LOW);
   setDeviceState(PR, LOW);
-  //setDeviceState(LS_101, LOW);
-  //setDeviceState(LS_102, LOW);
-  //setDeviceState(LC_1, LOW);
-  //setDeviceState(AC_1, LOW);
 }
 
 // Private functions to handlers
@@ -109,7 +88,7 @@ void checkPresence() {
 }
 
 void checkSmokeClass1() {
-    printf("Sala 01 - Sensor de Fumaça Ativado!!! FOGOOO!!!\n");
+    printf("Sala 01 - Sensor de Fumaça Ativado!\n");
     sendCommand(SFum);
 
     int sensorState = digitalRead(SFum);
@@ -130,18 +109,13 @@ void checkWindow1() {
     sendCommand(SJan);
 }
 
-void checkWindow2() {
-    printf("Sala 03 - Sensor da Janela 2 Ativado!!!\n");
-    sendCommand(SJan);
-}
-
 void checkDoorClass1() {
     printf("Sala 01 - Sensor da Porta Ativado!!!\n");
     sendCommand(SPor);
 }
-void checkDoorClass2() {
-    printf("Sala 01 - Sensor da Porta Ativado!!!\n");
-    sendCommand(SPor);
+void checkpr(){
+    printf("sala 1- Senso de Projetor Multimídia Ativado!!!\n");
+
 }
 
 void checkPeopleQuantityGround_IN() {
@@ -164,20 +138,4 @@ void checkPeopleQuantityGround_OUT() {
     }
 }
 
-void checkSmokeClass3() {
-    printf("Sala 03 - Sensor de Fumaça Ativado!!! FOGOOO!!!\n");
-    sendCommand(SFum);
-
-    int sensorState = digitalRead(SFum);
-
-    if (sensorState == 1) {
-        pinMode(AL_BZ, OUTPUT);
-        digitalWrite(AL_BZ, HIGH);
-        sendCommand(AL_BZ);
-    } else {
-        pinMode(AL_BZ, OUTPUT);
-        digitalWrite(AL_BZ, LOW);
-        sendCommand(AL_BZ);
-    }
-}
 
