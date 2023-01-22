@@ -7,10 +7,10 @@ import math
 from threading import Event, Thread 
 from rpi_lcd import LCD
 
-from connection.uart import UART
-from utils.pid import PID
-from connection.forno import Forno
-from utils.csv import CSV
+from conexão.uart import UART
+from utilitarios.pid import PID
+from conexão.forno import Forno
+from utilitarios.csv import CSV
 
 class AirFryer:
     port = '/dev/serial0'
