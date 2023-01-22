@@ -12,7 +12,7 @@ from utilitarios.pid import PID
 from conexão.forno import Forno
 from utilitarios.csv import CSV
 
-class AirFryer:
+class Serial:
     port = '/dev/serial0'
     baudrate = 9600
     timeout = 0.5
@@ -288,6 +288,6 @@ class AirFryer:
         thread_csv = Thread(target=self.salva_log, args=())
         thread_csv.start()
 
-        print('AirFryer iniciada')
+        print('Forno iniciada')
 
-AirFryer()
+Serial()
