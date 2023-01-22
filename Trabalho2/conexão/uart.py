@@ -1,7 +1,7 @@
 import serial
 import time
 
-from utils.crc16 import calcula_CRC
+from utilitarios.crc16 import calcula_CRC
 
 class UART:
     conectado = False
