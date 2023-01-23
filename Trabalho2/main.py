@@ -6,7 +6,6 @@ import math
 
 from threading import Event, Thread 
 from rpi_lcd import LCD
-#import smbus
 from conexão.uart import UART
 from utilitarios.pid import PID
 from conexão.forno import Forno
@@ -25,13 +24,10 @@ class Serial:
     temporizador = Event()
     enviando = Event()
     
-    #bus = smbus.SMBus(1)
+   
 
-    #lcd = LCD()
-    #time.sleep(1)
-    time.sleep(1) #wait here to avoid 121 IO Error      
-    lcd = LCD('PCF8574', 0x27)
-    lcd.cursor_pos = (0,0)
+    lcd = LCD()
+    
     menu = -1
     
     temp_inter = 0
