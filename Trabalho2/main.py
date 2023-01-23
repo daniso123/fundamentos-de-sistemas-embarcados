@@ -6,7 +6,7 @@ import math
 
 from threading import Event, Thread 
 from rpi_lcd import LCD
-import smbus
+#import smbus
 from conexão.uart import UART
 from utilitarios.pid import PID
 from conexão.forno import Forno
@@ -25,9 +25,10 @@ class Serial:
     temporizador = Event()
     enviando = Event()
     
-    bus = smbus.SMBus(1)
-    time.sleep(1)
+    #bus = smbus.SMBus(1)
+
     lcd = LCD()
+    time.sleep(1)
     menu = -1
     
     temp_inter = 0
