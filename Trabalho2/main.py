@@ -17,7 +17,7 @@ class Esquenta:
     port = '/dev/serial0'
     baudrate = 9600
     timeout = 0.5
-    matricula = [3, 6, 6, 6]
+    matricula = [5, 2, 2, 2]
 
     ligado = Event()
     funcionando = Event()
