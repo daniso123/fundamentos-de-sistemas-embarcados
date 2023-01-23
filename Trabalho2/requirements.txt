@@ -1,4 +1,3 @@
 pyserial
-serial
 rpi.bme280
 smbus2
