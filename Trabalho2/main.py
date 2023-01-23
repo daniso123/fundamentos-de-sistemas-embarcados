@@ -98,7 +98,7 @@ def read_and_update_temperature_target(oven):
     data_received = communicator.message_receiver()
     temp = struct.unpack('f', data_received)[0]
     oven.oven_temperature_target = temp
-    print("Target Temperature - " + str(temp))
+    print("Temperatura alvo- " + str(temp))
 
 
 def read_and_update_oven_temperature(oven):
@@ -107,7 +107,7 @@ def read_and_update_oven_temperature(oven):
     data_received = communicator.message_receiver()
     temp = struct.unpack('f', data_received)[0]
     oven.internal_temperature = temp
-    print("Oven temperature - " + str(temp))
+    print("Temperatura do forno - " + str(temp))
 
 
 def system_update_routine():
@@ -130,14 +130,14 @@ def system_update_routine():
             send_control_signal(pid_result)
 
             if pid_result > 0:
-                temperature_controller.heat_the_oven(pid_result)
-                temperature_controller.cool_the_oven(0)
+                temperature_controller.aquecer(pid_result)
+                temperature_controller.resfriar(0)
             else:
                 pid_result = pid_result * -1
                 if pid_result < 40:
                     pid_result = 40
-                temperature_controller.cool_the_oven(pid_result)
-                temperature_controller.heat_the_oven(0)
+                temperature_controller.resfriar(pid_result)
+                temperature_controller.aquecer(0)
 
         log.create_log_entry(leitor_temperatura_externa.get_external_temperature(), oven.internal_temperature, oven.oven_temperature_target, pid_result)
 
