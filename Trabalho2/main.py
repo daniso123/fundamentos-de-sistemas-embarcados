@@ -5,7 +5,8 @@ import struct
 import math
 
 from threading import Event, Thread 
-from rpi_lcd import LCD
+#from rpi_lcd import LCD
+import bme280
 from conexão.uart import UART
 from utilitarios.pid import PID
 from conexão.forno import Forno
@@ -26,7 +27,7 @@ class Serial:
     
    
 
-    lcd = LCD()
+    bme = bme280()
     
     menu = -1
     
@@ -35,7 +36,6 @@ class Serial:
 
     tempo_seg = 0
     tempo_ref = 0
-
     def __init__(self):
         self.uart = UART(self.port, self.baudrate, self.timeout)
         self.pid = PID()
@@ -242,21 +242,21 @@ class Serial:
         if dados is not None:
             self.trata_temp_ref(dados)
 
-    def atualiza_lcd(self):
+    def atualiza_bme(self):
         while True:
             if self.ligado.is_set():
-                self.lcd.clear()
+                self.bme.clear()
                 if self.aquecendo.is_set():
-                    self.lcd.text(f'TI:{round(self.temp_inter, 2)} TR:{round(self.temp_ref, 2)}', 1)
-                    self.lcd.text(f'Pre-aquecendo', 2)
+                    self.bme.text(f'TI:{round(self.temp_inter, 2)} TR:{round(self.temp_ref, 2)}', 1)
+                    self.bme.text(f'Pre-aquecendo', 2)
                 elif self.resfriando.is_set():
-                    self.lcd.text(f'TI:{round(self.temp_inter, 2)} TR:{round(self.temp_ref, 2)}', 1)
-                    self.lcd.text(f'Resfriando', 2)
+                    self.bme.text(f'TI:{round(self.temp_inter, 2)} TR:{round(self.temp_ref, 2)}', 1)
+                    self.bme.text(f'Resfriando', 2)
                 else:
-                    self.lcd.text(f'TI:{round(self.temp_inter, 2)} TR:{round(self.temp_ref, 2)}', 1)
-                    self.lcd.text(f'Tempo: {str(datetime.timedelta(seconds=self.tempo_seg))}', 2)
+                    self.bme.text(f'TI:{round(self.temp_inter, 2)} TR:{round(self.temp_ref, 2)}', 1)
+                    self.bme.text(f'Tempo: {str(datetime.timedelta(seconds=self.tempo_seg))}', 2)
             else:
-                self.lcd.clear()
+                self.bme.clear()
             time.sleep(1)
 
     def salva_log(self):
@@ -284,8 +284,8 @@ class Serial:
         thread_rotina = Thread(target=self.rotina, args=())
         thread_rotina.start()
 
-        thread_lcd = Thread(target=self.atualiza_lcd, args=())
-        thread_lcd.start()
+        thread_bme = Thread(target=self.atualiza_bme, args=())
+        thread_bme.start()
 
         thread_csv = Thread(target=self.salva_log, args=())
         thread_csv.start()

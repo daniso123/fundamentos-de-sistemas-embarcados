@@ -1,2 +1,3 @@
 serial
-rpi_lcd
+rpi.bme280
+smbus2
