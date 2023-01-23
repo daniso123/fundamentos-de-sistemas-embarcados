@@ -13,7 +13,7 @@ pid = utilitarios.pid.PID()
 leitor_temperatura_externa = utilitarios.teperaturaexterna.LeitorTemperaturaExterna()
 log = utilitarios.csv.LogManager()
 communicator = conexão.uart.UartCommunicator()
-temperature_controller = utilitarios.controle.TemperatureControlModule()
+temperature_controller = utilitarios.controle.FornoControle()
 
 
 def turn_on():
