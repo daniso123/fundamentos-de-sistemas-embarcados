@@ -120,7 +120,7 @@ def system_update_routine():
         watch_for_buttons(oven)
         read_and_update_oven_temperature(oven)
         watch_for_buttons(oven)
-        pid_result = pid.output(oven.oven_temperature_target, oven.internal_temperature)
+        pid_result = pid.pid_controle(oven.oven_temperature_target, oven.internal_temperature)
 
         if oven.on and oven.working:
 
