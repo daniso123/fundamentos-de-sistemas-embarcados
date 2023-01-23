@@ -6,7 +6,7 @@ from utilitarios.crc16 import calcula_CRC
 class UartCommunicator:
     def __init__(self):
         self.serial_port = serial.Serial(port='/dev/serial0', baudrate=9600, timeout=1)
-        self.matricula = [5, 2, 2, 2]
+        self.matricula = [4, 9, 9, 2]
 
     def close_connection(self):
         self.serial_port.close()
