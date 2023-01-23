@@ -2,7 +2,7 @@ import time
 import struct
 from threading import Thread, Event
 
-import utilitarios.teperaturaexterna 
+import utilitarios.teperaturaexterna
 import utilitarios.csv
 import conexão.uart
 import conexão.forno
@@ -10,7 +10,7 @@ import utilitarios.pid
 import utilitarios.controle
 
 pid = utilitarios.pid.PID()
-leitor_temperatura_externa = utilitarios.teperaturaexterna .LeitorTemperaturaExterna()
+leitor_temperatura_externa = utilitarios.teperaturaexterna.LeitorTemperaturaExterna()
 log = utilitarios.csv.LogManager()
 communicator = conexão.uart.UartCommunicator()
 temperature_controller = utilitarios.controle.TemperatureControlModule()
