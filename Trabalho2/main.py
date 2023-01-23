@@ -5,8 +5,9 @@ import struct
 import math
 
 from threading import Event, Thread 
-#from rpi_lcd import LCD
+
 import bme280
+import smbus2
 from conexão.uart import UART
 from utilitarios.pid import PID
 from conexão.forno import Forno
@@ -25,9 +26,15 @@ class Serial:
     temporizador = Event()
     enviando = Event()
     
+    port = 1
+    address = 0x76
+    bus = smbus2.SMBus(port)
+
+    calibration_params = bme280.load_calibration_params(bus, address)
+
    
 
-    bme = bme280()
+    bme=bme280.sample(bus, address, calibration_params)
     
     menu = -1
     
