@@ -13,7 +13,7 @@ from utilitarios.pid import PID
 from conexão.forno import Forno
 from utilitarios.csv import CSV
 
-class Serial:
+class Esquenta:
     port = '/dev/serial0'
     baudrate = 9600
     timeout = 0.5
@@ -299,4 +299,4 @@ class Serial:
 
         print('Forno iniciada')
 
-Serial()
+Esquenta()
