@@ -112,7 +112,7 @@ def read_and_update_oven_temperature(oven):
 
 def system_update_routine():
 
-    oven = conexão.forno.ReflowOven()
+    oven = conexão.forno.Forno()
 
     while True:
 
