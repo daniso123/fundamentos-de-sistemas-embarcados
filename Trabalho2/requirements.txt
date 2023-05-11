@@ -1,3 +1,0 @@
-pyserial
-rpi.bme280
-smbus2

@@ -9,7 +9,7 @@ LOG_FILE_PATH = 'log.csv'
 def CSV():   
     with open(LOG_FILE_PATH, 'w', encoding='UTF8') as log_file:
         #self.file = open('log.csv', 'w')
-        #self.writer = csv.writer(self.file)
+        #OÇ:4self.writer = csv.writer(self.file)
         file_writer = csv.writer(log_file)
         data = ["Data", "Hora", "Temperatura Ambiente", "Temperatura Interna", "temperatura alvo", "Sinal PID"]
         file_writer.writerow(data)
