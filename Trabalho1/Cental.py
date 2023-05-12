@@ -67,8 +67,8 @@ class ServerCentral:
         self.mutex.release()
 
 # Configurações do servidor central
-endereco_central = '192.168.0.100'
-port_central = 10963
+endereco_central = '164.41.98.15'
+port_central = 13508
 
 # Criar uma instância do servidor central
 servidor_central = ServerCentral(endereco_central, port_central)
