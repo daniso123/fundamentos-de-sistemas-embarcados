@@ -106,7 +106,6 @@ class ServerCentral:
 
     def atualizar_interface(self):
             while True:
-                #Atualizar informações na interface (exemplo: imprimir no console)
                 print("--------- Estado Atual ---------")
                 print(f"Andar 1 - Vagas Disponíveis: {self.andar1_vagas_disponiveis}")
                 print(f"Andar 1 - Carros Estacionados: {self.andar1_carros_estacionados}")
@@ -118,7 +117,7 @@ class ServerCentral:
                 print(f"Bloqueio do 2º Andar: {self.sinal_lotado}")
                 print("--------------------------------")
 
-                time.sleep(5)  #Atualizar a cada 5 segundos
+                time.sleep(5)
 
     def run(self):
         threading.Thread(target=self.iniciar).start()
