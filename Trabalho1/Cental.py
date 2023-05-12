@@ -107,14 +107,14 @@ class ServerCentral:
     def atualizar_interface(self):
             while True:
                 print("--------- Estado Atual ---------")
-                print(f"Andar 1 - Vagas Disponíveis: {self.andar1_vagas_disponiveis}")
-                print(f"Andar 1 - Carros Estacionados: {self.andar1_carros_estacionados}")
-                print(f"Andar 2 - Vagas Disponíveis: {self.andar2_vagas_disponiveis}")
-                print(f"Andar 2 - Carros Estacionados: {self.andar2_carros_estacionados}")
-                print(f"Total de Carros no Estacionamento: {self.total_carros}")
-                print(f"Valor Total Pago: R$ {self.valor_total_pago}")
-                print(f"Estacionamento Fechado: {self.estacionamento_fechado}")
-                print(f"Bloqueio do 2º Andar: {self.sinal_lotado}")
+                print(f"Andar 1 - Vagas Disponíveis:" .format({self.andar1_vagas_disponiveis}))
+                print(f"Andar 1 - Carros Estacionados:" .format({self.andar1_carros_estacionados}))
+                print(f"Andar 2 - Vagas Disponíveis:" .format({self.andar2_vagas_disponiveis}))
+                print(f"Andar 2 - Carros Estacionados:" .format({self.andar2_carros_estacionados}))
+                print(f"Total de Carros no Estacionamento:" .format({self.total_carros}))
+                print(f"Valor Total Pago: R$".format({self.valor_total_pago}))
+                print(f"Estacionamento Fechado:" .format({self.estacionamento_fechado}))
+                print(f"Bloqueio do 2º Andar:" .format({self.sinal_lotado}))
                 print("--------------------------------")
 
                 time.sleep(5)
