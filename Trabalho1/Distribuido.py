@@ -13,12 +13,12 @@ class ServerDistribuido:
         self.cancela_saida_aberta = False
 
         if andar == 1:
-            self.GPIO_CANCELA_ENTRADA_SENSOR_ABERTURA = 23
-            self.GPIO_CANCELA_ENTRADA_SENSOR_FECHAMENTO = 24
-            self.GPIO_CANCELA_ENTRADA_MOTOR = 10
-            self.GPIO_CANCELA_SAIDA_SENSOR_ABERTURA = 25
-            self.GPIO_CANCELA_SAIDA_SENSOR_FECHAMENTO = 12
-            self.GPIO_CANCELA_SAIDA_MOTOR = 17
+            self.GPIO_CANCELA_ENTRADA_SENSOR_ABERTURA = 10
+            self.GPIO_CANCELA_ENTRADA_SENSOR_FECHAMENTO = 22
+            self.GPIO_CANCELA_ENTRADA_MOTOR = 5
+            self.GPIO_CANCELA_SAIDA_SENSOR_ABERTURA = 27
+            self.GPIO_CANCELA_SAIDA_SENSOR_FECHAMENTO = 23
+            self.GPIO_CANCELA_SAIDA_MOTOR = 0
 
             GPIO.setup(self.GPIO_CANCELA_ENTRADA_SENSOR_ABERTURA, GPIO.IN)
             GPIO.setup(self.GPIO_CANCELA_ENTRADA_SENSOR_FECHAMENTO, GPIO.IN)
