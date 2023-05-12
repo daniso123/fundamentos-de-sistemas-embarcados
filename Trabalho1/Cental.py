@@ -24,7 +24,8 @@ class ServerCentral:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind((self.endereco, self.port))
         self.sock.listen(5)
-        print(f"Servidor central iniciado em {self.endereco}:{self.port}")
+        #print(f"Servidor central iniciado em {self.endereco}:{self.port}")
+        print("Servidor central iniciado em {}:{}".format(self.endereco, self.port))
 
         while True:
             cliente, endereco = self.sock.accept()
