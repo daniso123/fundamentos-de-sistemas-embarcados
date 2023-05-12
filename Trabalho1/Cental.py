@@ -107,14 +107,14 @@ class ServerCentral:
     def atualizar_interface(self):
             while True:
                 print("--------- Estado Atual ---------")
-                print("Andar 1 - Vagas Disponíveis:" .format({self.andar1_vagas_disponiveis}))
-                print("Andar 1 - Carros Estacionados:" .format({self.andar1_carros_estacionados}))
-                print("Andar 2 - Vagas Disponíveis:" .format({self.andar2_vagas_disponiveis}))
-                print("Andar 2 - Carros Estacionados:" .format({self.andar2_carros_estacionados}))
-                print("Total de Carros no Estacionamento:" .format({self.total_carros}))
-                print("Valor Total Pago: R$".format({self.valor_total_pago}))
-                print("Estacionamento Fechado:" .format({self.estacionamento_fechado}))
-                print("Bloqueio do 2º Andar:" .format({self.sinal_lotado}))
+                print("Andar 1 - Vagas Disponíveis:".format(self.andar1_vagas_disponiveis))
+                print("Andar 1 - Carros Estacionados:" .format(self.andar1_carros_estacionados))
+                print("Andar 2 - Vagas Disponíveis:" .format(self.andar2_vagas_disponiveis))
+                print("Andar 2 - Carros Estacionados:" .format(self.andar2_carros_estacionados))
+                print("Total de Carros no Estacionamento:" .format(self.total_carros))
+                print("Valor Total Pago: R$".format(self.valor_total_pago))
+                print("Estacionamento Fechado:" .format(self.estacionamento_fechado))
+                print("Bloqueio do 2º Andar:" .format(self.sinal_lotado))
                 print("--------------------------------")
 
                 time.sleep(5)
