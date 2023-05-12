@@ -1,7 +1,7 @@
 import json
 import socket
 import threading
-import time
+#import time
 
 # Classe responsável pelo servidor central
 class ServerCentral:
