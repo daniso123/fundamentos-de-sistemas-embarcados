@@ -107,7 +107,7 @@ class ServerCentral:
     def atualizar_interface(self):
             while True:
                 print("--------- Estado Atual ---------")
-                #print("Andar 1 - Vagas Disponíveis:".format(self.andar1_vagas_disponiveis))
+                print("Andar 1 - Vagas Disponíveis:".format(self.andar1_vagas_disponiveis))
                 print("Andar 1 - Carros Estacionados:" .format(self.andar1_carros_estacionados))
                 print("Andar 2 - Vagas Disponíveis:" .format(self.andar2_vagas_disponiveis))
                 print("Andar 2 - Carros Estacionados:" .format(self.andar2_carros_estacionados))
@@ -124,6 +124,6 @@ class ServerCentral:
         threading.Thread(target=self.atualizar_interface).start()
 
 if __name__ == "__main__":
-    servidor = ServerCentral('localhost', 8000)
+    servidor = ServerCentral('localhost', 10231)
     servidor.run()
 
