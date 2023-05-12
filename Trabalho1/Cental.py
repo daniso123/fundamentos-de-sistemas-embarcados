@@ -106,7 +106,7 @@ class ServerCentral:
 
     def atualizar_interface(self):
             while True:
-                # Atualizar informações na interface (exemplo: imprimir no console)
+                #Atualizar informações na interface (exemplo: imprimir no console)
                 print("--------- Estado Atual ---------")
                 print(f"Andar 1 - Vagas Disponíveis: {self.andar1_vagas_disponiveis}")
                 print(f"Andar 1 - Carros Estacionados: {self.andar1_carros_estacionados}")
