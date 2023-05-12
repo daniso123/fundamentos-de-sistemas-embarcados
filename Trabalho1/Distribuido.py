@@ -7,6 +7,7 @@ import json
 class ServerDistribuido:
     def __init__(self, servidor_central_ip, servidor_central_porta, andar):
         GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
         self.servidor_central_ip = servidor_central_ip
         self.servidor_central_porta = servidor_central_porta
         self.andar = andar
