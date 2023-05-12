@@ -26,6 +26,7 @@ class ServerCentral:
         self.sock.listen(5)
         #print(f"Servidor central iniciado em {self.endereco}:{self.port}")
         print("Servidor central iniciado em {}:{}".format(self.endereco, self.port))
+        print("passou por aqui iniciar")
 
         while True:
             cliente, endereco = self.sock.accept()
@@ -33,6 +34,7 @@ class ServerCentral:
             self.clientes.append(cliente)
             self.mutex.release()
             threading.Thread(target=self.ouvir_cliente, args=(cliente,)).start()
+            print("passou por aqui laço")
 
     def enviar_mensagem(self, cliente, mensagem):
         try:
@@ -42,6 +44,7 @@ class ServerCentral:
             self.mutex.acquire()
             self.clientes.remove(cliente)
             self.mutex.release()
+            print("passou por aqui enviar mensagem")
 
     def ouvir_cliente(self, cliente):
         while True:
@@ -62,6 +65,7 @@ class ServerCentral:
                 self.clientes.remove(cliente)
                 self.mutex.release()
                 break
+        print("passou por aqui ouvir cliente")
 
     def processar_mensagem(self, mensagem):
         try:
@@ -90,6 +94,7 @@ class ServerCentral:
         for cliente in self.clientes:
             threading.Thread(target=self.enviar_mensagem, args=(cliente, mensagem)).start()
         self.mutex.release()
+        print("passou por aqui com certeza")
 
     def calcular_valor_pago(self, minutos):
         return minutos * 0.15
