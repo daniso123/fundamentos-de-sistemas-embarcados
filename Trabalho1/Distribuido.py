@@ -6,6 +6,7 @@ import json
 
 class ServerDistribuido:
     def __init__(self, servidor_central_ip, servidor_central_porta, andar):
+        GPIO.setmode(GPIO.BOARD)
         self.servidor_central_ip = servidor_central_ip
         self.servidor_central_porta = servidor_central_porta
         self.andar = andar
@@ -17,7 +18,7 @@ class ServerDistribuido:
             self.GPIO_CANCELA_ENTRADA_SENSOR_FECHAMENTO = 22
             self.GPIO_CANCELA_ENTRADA_MOTOR = 5
             self.GPIO_CANCELA_SAIDA_SENSOR_ABERTURA = 27
-            self.GPIO_CANCELA_SAIDA_SENSOR_FECHAMENTO = 23
+            self.GPIO_CANCELA_SAIDA_SENSOR_FECHAMENTO = 17
             self.GPIO_CANCELA_SAIDA_MOTOR = 0
 
             GPIO.setup(self.GPIO_CANCELA_ENTRADA_SENSOR_ABERTURA, GPIO.IN)
