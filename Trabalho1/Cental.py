@@ -118,7 +118,7 @@ class ServerCentral:
                 print(f"Bloqueio do 2º Andar: {self.sinal_lotado}")
                 print("--------------------------------")
 
-                time.sleep(5)  # Atualizar a cada 5 segundos
+                time.sleep(5)  #Atualizar a cada 5 segundos
 
     def run(self):
         threading.Thread(target=self.iniciar).start()
