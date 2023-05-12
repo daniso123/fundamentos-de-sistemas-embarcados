@@ -3,7 +3,7 @@ import socket
 import threading
 #import time
 
-# Classe responsável pelo servidor central
+
 class ServerCentral:
     def __init__(self, endereco, port):
         self.endereco = endereco
