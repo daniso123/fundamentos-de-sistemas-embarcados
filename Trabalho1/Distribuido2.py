@@ -8,8 +8,8 @@ from time import sleep
 
 
 
-print("Config:")
-print(sys.argv[1])
+#print("Config:")
+#print(sys.argv[1])
 
 dicionario_configuracao = []
 
@@ -21,7 +21,7 @@ with open(sys.argv[1]) as arquivo_entrada:
 fila_mensagens_para_envio = []
 
 servidor = '164.41.98.15'
-porta = 10231
+port = 10231
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 clientSocket.connect((servidor, port));
