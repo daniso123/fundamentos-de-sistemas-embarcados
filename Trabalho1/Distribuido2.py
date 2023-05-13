@@ -20,8 +20,8 @@ with open(sys.argv[1]) as arquivo_entrada:
 #mensagens no formato json
 fila_mensagens_para_envio = []
 
-servidor = '164.41.98.26'
-port = 10091
+servidor = '164.41.98.15'
+porta = 10231
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 clientSocket.connect((servidor, port));
