@@ -12,7 +12,7 @@ fila_instrucoes = []
 fila_respostas = []
 
 ip_servidor = '164.41.98.15'
-porta = 10231
+porta = 10240
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSocket.bind((ip_servidor, porta))
@@ -26,22 +26,15 @@ print("Aguardando servidor distribuido . . . ")
 
 print("Distribuido Conectado")
 
-# THREAD MANDAR MENSAGEM
-def send_messages(message:list):
-    while True:
-        if len(message) != 0:
-            clientConnected.send(bytes(message[len(message) - 1], "utf-8"))
-            message.pop()
-            sleep(0.75)
 
-def receive_messages(fila_respostas):
-    while True:
-        dataFromClient = clientConnected.recv(1024)
-        fila_respostas.append(json.loads(dataFromClient.decode()))
-        sleep(0.15)
+def abrir_cancela(servidor, porta):
+    # Criar uma conexão com o servidor
+    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientSocket.connect((servidor, porta))
 
-t = Thread(target=send_messages, args=(fila_instrucoes, ))
-t.start()
+    # Enviar comando para abrir a cancela
+    comando = "ABRIR_CANCELA"
+    clientSocket.send(comando.encode())
 
-t2 = Thread(target=receive_messages, args=(fila_respostas, ))
-t2.start()
+    # Fechar a conexão
+    clientSocket.close()
