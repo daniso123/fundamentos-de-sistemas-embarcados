@@ -1,54 +1,26 @@
-import sys
-import json
 import socket
-import threading
+import json
 
-
-from time import sleep
-
-
-#mensagens no formato json
-fila_mensagens_para_envio = []
-
-servidor = '164.41.98.15'
-port = 10240
+ip_servidor = '164.41.98.15'
+porta = 10231
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-clientSocket.connect((servidor, port))
+clientSocket.connect((ip_servidor, porta))
 
+print("Cliente conectado ao servidor")
 
-def metodo_recebimento_mensagens(fila_mensagens):
-    while True:
-        dataFromServer = clientSocket.recv(1024)
-        print(dataFromServer.decode())
-        dicionario_resposta = json.loads(dataFromServer.decode())
+# Exemplo de envio de mensagem para o servidor
+mensagem = {
+    "acao": "acao_exemplo",
+    "dados": "Dados de exemplo"
+}
+mensagem_json = json.dumps(mensagem)
+clientSocket.sendall(mensagem_json.encode())
 
+# Exemplo de recebimento de resposta do servidor
+dataFromServer = clientSocket.recv(1024)
+resposta = json.loads(dataFromServer.decode())
+print("Resposta do servidor:", resposta)
 
-        # Direcionamento para cada função dependendo do requerimento
-
-        if "ligar_desligar_aparelho" in dicionario_resposta.keys():
-            print("Key ligar_desligar_aparelho encontrada")
-            #interruptor_aparelhos(dicionario_resposta["ligar_desligar_aparelho"][0],dicionario_resposta["ligar_desligar_aparelho"][1])
-
-
-        #if "Temperatura" in dicionario_resposta.keys():
-            #fila_mensagens.append(leitor_temperatura())
-
-        sleep(0.5)
-
-def metodo_envio_mensagens(fila_mensagens:dict):
-    while True:
-        sleep(0.15)
-        if len(fila_mensagens) != 0:
-            print(fila_mensagens)
-            for mensagem in fila_mensagens:
-                clientSocket.sendto((json.dumps(mensagem)).encode(), (servidor, port))
-            fila_mensagens.clear()
-
-
-
-thread_envio_mensagem = threading.Thread(target=metodo_recebimento_mensagens, args=(fila_mensagens_para_envio, ))
-thread_envio_mensagem.start()
-
-thread_recebimento_mensagem = threading.Thread(target=metodo_envio_mensagens, args=(fila_mensagens_para_envio, ))
-thread_recebimento_mensagem.start()
+# Fechar a conexão com o servidor
+clientSocket.close()
