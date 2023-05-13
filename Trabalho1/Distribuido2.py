@@ -11,7 +11,7 @@ from time import sleep
 fila_mensagens_para_envio = []
 
 servidor = '164.41.98.15'
-port = 10231
+port = 10240
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 clientSocket.connect((servidor, port));
