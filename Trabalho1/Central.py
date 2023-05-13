@@ -8,6 +8,9 @@ import socket
 import json
 
 
+fila_instrucoes = []
+fila_respostas = []
+
 ip_servidor = '164.41.98.15'
 porta = 10231
 
@@ -22,6 +25,14 @@ print("Aguardando servidor distribuido . . . ")
 (clientConnected, clientAddress) = serverSocket.accept()
 
 print("Distribuido Conectado")
+
+# THREAD MANDAR MENSAGEM
+def send_messages(message:list):
+    while True:
+        if len(message) != 0:
+            clientConnected.send(bytes(message[len(message) - 1], "utf-8"))
+            message.pop()
+            sleep(0.75)
 
 def receive_messages(fila_respostas):
     while True:
