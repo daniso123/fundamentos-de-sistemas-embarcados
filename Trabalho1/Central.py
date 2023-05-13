@@ -37,7 +37,6 @@ def send_messages(message:list):
 def receive_messages(fila_respostas):
     while True:
         dataFromClient = clientConnected.recv(1024)
-        #print("Data received = " + dataFromClient.decode())
         fila_respostas.append(json.loads(dataFromClient.decode()))
         sleep(0.15)
 
