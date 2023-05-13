@@ -1,40 +1,89 @@
-from threading import Thread
-
-from time import sleep
-
-
 import socket
-
+import threading
 import json
 
+class ServidorCentral:
+    def __init__(self, endereco, porta):
+        self.endereco = endereco
+        self.porta = porta
+        self.servidor_socket = None
+        self.clientes = []
 
-fila_instrucoes = []
-fila_respostas = []
+         # Variáveis de controle de estacionamento
+        self.num_carros_andar = [0, 0, 0]  # Número de carros em cada andar
+        self.num_total_carros = 0
+        self.num_carros_total = 0  # Número total de carros no estacionamento
+        self.num_vagas_disponiveis = [10, 10, 10]  # Número de vagas disponíveis em cada andar
+        self.valor_total_pago = 0.0  # Valor total pago
 
-ip_servidor = '164.41.98.15'
-porta = 10240
+        
 
-serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serverSocket.bind((ip_servidor, porta))
+    def iniciar_servidor(self):
+        self.servidor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.servidor_socket.bind((self.endereco, self.porta))
+        self.servidor_socket.listen(5)
+        print(f"Servidor central iniciado em {self.endereco}:{self.porta}")
 
-serverSocket.listen(5)
+        while True:
+            cliente_socket, cliente_endereco = self.servidor_socket.accept()
+            cliente_thread = threading.Thread(target=self.lidar_conexao, args=(cliente_socket,))
+            cliente_thread.start()
+            self.clientes.append((cliente_socket, cliente_endereco))
+            print(f"Novo cliente conectado: {cliente_endereco}")
 
-print("Aguardando servidor distribuido . . . ")
+    def lidar_conexao(self, cliente_socket):
+        while True:
+            try:
+                dados = cliente_socket.recv(1024).decode()
+                mensagem = json.loads(dados)
+                print(f"Mensagem recebida do cliente: {mensagem}")
+            
 
-# Programa só vai prosseguir se tiver uma conexão
-(clientConnected, clientAddress) = serverSocket.accept()
+                if "mensagem" in mensagem:
+                    if mensagem["mensagem"] == "Entrando carro no estacionamento":
+                        self.num_total_carros= self.num_total_carros + 1
 
-print("Distribuido Conectado")
+                        # Atualiza as informações recebidas do cliente
+                        if 'num_carros_andar' in mensagem:
+                            self.num_carros_andar = mensagem['num_carros_andar']
+                            self.num_carros_andar= self.num_carros_andar+1
+                        if 'num_vagas_disponiveis' in mensagem:
+                            self.num_vagas_disponiveis = mensagem['num_vagas_disponiveis']
+                            
+                        if 'valor_total_pago' in mensagem:
+                            self.valor_total_pago = mensagem['valor_total_pago']
+
+                # Cálculo do valor total pago
+                valor_pago = self.calcular_valor_pago()
+                self.enviar_mensagem_cliente(cliente_socket, {'valor_pago': valor_pago})
+
+            except ConnectionResetError:
+                self.clientes.remove(cliente_socket)
+                print("Cliente desconectado")
+                break
+
+        cliente_socket.close()
+
+    def calcular_valor_pago(self):
+        minutos_estacionados = sum(self.num_carros_andar)  # Considera que cada carro estacionado corresponde a 1 minuto
+        valor_pago = minutos_estacionados * 0.15  # Taxa de R$ 0,15 (quinze centavos) por minuto
+        return valor_pago
+
+    def enviar_mensagem_cliente(self, cliente_socket, mensagem):
+        cliente_socket.send(json.dumps(mensagem).encode())
+
+    def enviar_mensagem_todos_clientes(self, mensagem):
+        for cliente_socket, _ in self.clientes:
+            cliente_socket.send(json.dumps(mensagem).encode())
+
+    def encerrar_servidor(self):
+        self.servidor_socket.close()
+
+# Exemplo de uso
+servidor = ServidorCentral("localhost", 10231)
+servidor.iniciar_servidor()
 
 
-def abrir_cancela(servidor, porta):
-    # Criar uma conexão com o servidor
-    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect((servidor, porta))
 
-    # Enviar comando para abrir a cancela
-    comando = "ABRIR_CANCELA"
-    clientSocket.send(comando.encode())
 
-    # Fechar a conexão
-    clientSocket.close()
+
