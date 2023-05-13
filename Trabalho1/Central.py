@@ -1,6 +1,7 @@
-import RPi.GPIO as GPIO
+
 import socket
 import threading
+import time
 import json
 
 class ServidorCentral:
@@ -50,11 +51,7 @@ class ServidorCentral:
                             self.num_carros_andar= self.num_carros_andar+1
                         if 'num_vagas_disponiveis' in mensagem:
                             self.num_vagas_disponiveis = mensagem['num_vagas_disponiveis']
-                            GPIO.input(SENSOR_DE_VAGA)
-                            vagas = []
-                            for endereco in range(8):
-                                if leitura_sensor_vaga(endereco):
-                                    vagas.append(endereco+1)
+                            
 
                         if 'valor_total_pago' in mensagem:
                             self.valor_total_pago = mensagem['valor_total_pago']
@@ -70,12 +67,6 @@ class ServidorCentral:
 
         cliente_socket.close()
 
-    def leitura_sensor_vaga(endereco):
-        GPIO.output(ENDERECO_01, (endereco & 0b001) == 0b001)
-        GPIO.output(ENDERECO_02, (endereco & 0b010) == 0b010)
-        GPIO.output(ENDERECO_03, (endereco & 0b100) == 0b100)
-        time.sleep(0.2) 
-        return GPIO.input(SENSOR_DE_VAGA)
 
     def calcular_valor_pago(self):
         minutos_estacionados = sum(self.num_carros_andar)  # Considera que cada carro estacionado corresponde a 1 minuto
