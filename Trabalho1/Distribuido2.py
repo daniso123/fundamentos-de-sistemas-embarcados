@@ -7,16 +7,6 @@ import threading
 from time import sleep
 
 
-
-#print("Config:")
-#print(sys.argv[1])
-
-dicionario_configuracao = []
-
-with open(sys.argv[1]) as arquivo_entrada:
-    dicionario_configuracao = json.load(arquivo_entrada)
-
-
 #mensagens no formato json
 fila_mensagens_para_envio = []
 
