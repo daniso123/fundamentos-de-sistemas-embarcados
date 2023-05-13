@@ -55,15 +55,15 @@ class Cliente:
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
                 GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.HIGH)
                 self.enviar_mensagem(self,"Entrando carro no estacionamento")
-                
-            if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
-                GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.LOW)
+
+                if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
+                    GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.LOW)
 
             #SAÍDA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_SAIDA) == GPIO.HIGH:
                 GPIO.output(MOTOR_CANCELA_SAIDA, GPIO.HIGH)
-            if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_SAIDA, GPIO.RISING):
-                GPIO.output(MOTOR_CANCELA_SAIDA, GPIO.LOW)
+                if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_SAIDA, GPIO.RISING):
+                    GPIO.output(MOTOR_CANCELA_SAIDA, GPIO.LOW)
             
 
 
