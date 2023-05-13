@@ -1,5 +1,11 @@
 from threading import Thread
+
+from time import sleep
+
+
 import socket
+
+import json
 
 
 ip_servidor = '164.41.98.15'
