@@ -13,8 +13,8 @@ fila_mensagens_para_envio = []
 servidor = '164.41.98.15'
 port = 10240
 
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-clientSocket.connect((servidor, port));
+clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+clientSocket.connect((servidor, port))
 
 
 def metodo_recebimento_mensagens(fila_mensagens):
