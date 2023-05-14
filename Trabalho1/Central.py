@@ -33,6 +33,7 @@ class ServidorCentral:
             self.clientes.append((cliente_socket, cliente_endereco))
             print(f"Novo cliente conectado: {cliente_endereco}")
 
+   
     def lidar_conexao(self, cliente_socket):
         while True:
             try:
@@ -59,6 +60,8 @@ class ServidorCentral:
                 # Cálculo do valor total pago
                 valor_pago = self.calcular_valor_pago()
                 self.enviar_mensagem_cliente(cliente_socket, {'valor_pago': valor_pago})
+                self.enviar_mensagem_cliente(cliente_socket, {'vagas_disponiveis': self.num_vagas_disponiveis})
+
 
             except ConnectionResetError:
                 self.clientes.remove(cliente_socket)
@@ -66,6 +69,7 @@ class ServidorCentral:
                 break
 
         cliente_socket.close()
+
 
 
     def calcular_valor_pago(self):
