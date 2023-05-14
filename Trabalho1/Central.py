@@ -55,7 +55,11 @@ class ServidorCentral:
                             
 
                         if 'valor_total_pago' in mensagem:
-                            self.valor_total_pago = mensagem['valor_total_pago']
+                                self.valor_total_pago = mensagem['valor_total_pago']
+
+                                self.enviar_mensagem_cliente(cliente_socket, {'resultado': True})
+                        else:
+                                self.enviar_mensagem_cliente(cliente_socket, {'resultado': False})
 
                 # Cálculo do valor total pago
                 valor_pago = self.calcular_valor_pago()
