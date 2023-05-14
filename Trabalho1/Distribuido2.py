@@ -51,12 +51,13 @@ class Cliente:
         thread_recebimento.start()
 
         while True:
-            print("entrou aqui")
+            
             
             #ENTRADA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
                 GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.HIGH)
                 self.enviar_mensagem("Entrando carro no estacionamento")
+                print("entando um carro")
                 #GPIO.input(SENSOR_DE_VAGA)
                 #vagas = []
                 #for endereco in range(8):
