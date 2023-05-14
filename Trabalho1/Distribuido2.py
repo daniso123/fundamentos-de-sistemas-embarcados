@@ -51,6 +51,7 @@ class Cliente:
         thread_recebimento.start()
 
         while True:
+            print("entrou aqui")
             
             #ENTRADA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
