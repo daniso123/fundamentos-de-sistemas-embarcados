@@ -42,6 +42,14 @@ class Cliente:
         self.porta = porta
         self.cliente_socket = None
 
+    def leitura_sensor_vaga(endereco):
+        GPIO.output(ENDERECO_01, (endereco & 0b001) == 0b001)
+        GPIO.output(ENDERECO_02, (endereco & 0b010) == 0b010)
+        GPIO.output(ENDERECO_03, (endereco & 0b100) == 0b100)
+        time.sleep(0.2) 
+        return GPIO.input(SENSOR_DE_VAGA)
+                        
+
     def iniciar_cliente(self):
         self.cliente_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.cliente_socket.connect((self.servidor, self.porta))
@@ -65,13 +73,6 @@ class Cliente:
                 for endereco in range(8):
                     if leitura_sensor_vaga(endereco):
                         vagas.append(endereco+1)
-                        def leitura_sensor_vaga(endereco):
-                            GPIO.output(ENDERECO_01, (endereco & 0b001) == 0b001)
-                            GPIO.output(ENDERECO_02, (endereco & 0b010) == 0b010)
-                            GPIO.output(ENDERECO_03, (endereco & 0b100) == 0b100)
-                            time.sleep(0.2) 
-                            return GPIO.input(SENSOR_DE_VAGA)
-                        
 
                 if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
                     GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.LOW)
