@@ -71,7 +71,7 @@ class Cliente:
                 
                 vagas = []
                 for endereco in range(8):
-                    if leitura_sensor_vaga(endereco):
+                    if self.leitura_sensor_vaga(endereco):
                         vagas.append(endereco+1)
 
                 if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
