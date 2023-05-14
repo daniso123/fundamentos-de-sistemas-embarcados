@@ -1,7 +1,6 @@
 
 import socket
 import threading
-import time
 import json
 
 class ServidorCentral:
@@ -14,7 +13,6 @@ class ServidorCentral:
          # Variáveis de controle de estacionamento
         self.num_carros_andar = [0, 0, 0]  # Número de carros em cada andar
         self.num_total_carros = 0
-        self.num_carros_total = 0  # Número total de carros no estacionamento
         self.num_vagas_disponiveis = [8,8 , 8]  # Número de vagas disponíveis em cada andar
         self.valor_total_pago = 0.0  # Valor total pago
 
