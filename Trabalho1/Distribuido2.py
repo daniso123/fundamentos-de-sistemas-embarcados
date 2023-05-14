@@ -70,8 +70,8 @@ class Cliente:
                         #    return GPIO.input(SENSOR_DE_VAGA)
                         
 
-            if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
-                GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.LOW)
+                if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
+                    GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.LOW)
 
             #SAÍDA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_SAIDA) == GPIO.HIGH:
