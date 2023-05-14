@@ -42,7 +42,7 @@ class Cliente:
         self.porta = porta
         self.cliente_socket = None
 
-    def leitura_sensor_vaga(endereco):
+    def leitura_sensor_vaga(self,endereco):
         GPIO.output(ENDERECO_01, (endereco & 0b001) == 0b001)
         GPIO.output(ENDERECO_02, (endereco & 0b010) == 0b010)
         GPIO.output(ENDERECO_03, (endereco & 0b100) == 0b100)
