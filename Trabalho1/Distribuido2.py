@@ -146,9 +146,9 @@ class Cliente:
         self.cliente_socket.close()
 
 # Exemplo de uso
-if __name__ == '__main__':
-    cliente = Cliente("localhost", 10231)
-    cliente.iniciar_cliente()
+
+cliente = Cliente("localhost", 10231, 'Client 1')
+cliente.iniciar_cliente()
 
 ####################################Conexão com o servidor central############################################
 
