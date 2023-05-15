@@ -123,15 +123,11 @@ class ServidorCentral:
 
     def enviar_mensagem_cliente(self, cliente_socket, mensagem):
         cliente_socket.send(json.dumps(mensagem).encode())
+    
 
     def send_message(self, message):
-        for cliente in self.clientes:
-            cliente[0].send(message.encode())
-
-    def broadcast(self, message_dict, sender):
-        for cliente in self.clientes:
-            if cliente != sender:
-                cliente[0].send(json.dumps(message_dict).encode())
+      message_dict = {"from": "Server", "message": message}
+      self.broadcast(message_dict, None)
 
     def enviar_mensagem_todos_clientes(self, mensagem):
         for cliente_socket, _ in self.clientes:
