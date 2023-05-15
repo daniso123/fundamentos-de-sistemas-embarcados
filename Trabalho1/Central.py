@@ -63,58 +63,42 @@ class ServidorCentral:
                 global carros_andar1, sinal1, vagas1, carros_andar2, sinal2, vagas2, total_carros, id_carro
                 # Tratamento de mensagem adicionado
                 if mensagem['from'] == 'Client 1':
-                    
-                    carros_andar1 = mensagem['message'][0]['carros_andar1']
-                    sinal1 = mensagem['message'][0]['sinal1']
-                    vagas1 = mensagem['message'][0]['vagas'] 
-                    id_carro = id_carro + mensagem['message'][0]['id']
-                    vaga_ocupada = mensagem['message'][0]['vaga_ocupada']
+                    carros_andar1 = mensagem['message'].get('carros_andar1', 0)
+                    sinal1 = mensagem['message'].get('sinal1', 0)
+                    vagas1 = mensagem['message'].get('vagas', {})
+                    id_carro = id_carro + mensagem['message'].get('id', 0)
+                    vaga_ocupada = mensagem['message'].get('vaga_ocupada', '')
                     if (carros_andar1 + carros_andar2 >= 16 and sinal1 == 0) or (carros_andar1 >= 8 and sinal2 == 1):
                         self.send_message("Fechar andar 1")
-                
-                        
-                    if mensagem['message'][0]['cod'] == 'entrada':
-                        total_carros = total_carros + 1
-                    elif mensagem['message'][0]['cod'] == 'estaciona':
+
+                    if mensagem['message'].get('cod') == 'estaciona':
                         print(f'Carro andar 1 com ID {id_carro} estacionado na vaga {vaga_ocupada}')
                         lista_carros.append(Carro(id_carro, vaga_ocupada, datetime.now()))
-                    elif mensagem['message'][0]['cod'] == 'saida':
+                        self.send_message("Entrada permitida")
+                    elif mensagem['message'].get('cod') == 'saida':
                         for carro in lista_carros:
                             if carro.vaga == vaga_ocupada:
                                 print(f"O carro {carro.id_carro} está na vaga {carro.vaga}")
                                 lista_carros.remove(carro)
-                                
-
                 elif mensagem['from'] == 'Client 2':
-                    if mensagem['message'] == 'entrando andar2':
-                        self.send_message('entrando andar2')
-                        print('entrando andar2')
-                elif mensagem['message'] == 'saindo andar2':
-                        self.send_message('saindo andar2')
-                else:
-                    carros_andar2 = mensagem['message'][0].get('carros_andar2', 0)
-                    # carros_andar2 = mensagem['message'][0]['carros_andar2']
-                    sinal2 = mensagem['message'][0].get('sinal2')
-                    vagas2 = mensagem['message'][0].get['vagas'] 
-                    id_carro = id_carro + mensagem['message'][0]['id']
-                    vaga_ocupada = mensagem['message'][0]['vaga_ocupada']
-                    if carros_andar2 >= 8 and sinal2 == 0:
+                    carros_andar2 = mensagem['message'].get('carros_andar2', 0)
+                    sinal2 = mensagem['message'].get('sinal2', 0)
+                    vagas2 = mensagem['message'].get('vagas', {})
+                    id_carro = id_carro + mensagem['message'].get('id', 0)
+                    vaga_ocupada = mensagem['message'].get('vaga_ocupada', '')
+                    if (carros_andar1 + carros_andar2 >= 16 and sinal2 == 0) or (carros_andar2 >= 8 and sinal1 == 1):
                         self.send_message("Fechar andar 2")
-                    
-                    # if carros_andar2 < 8:
-                    #     self.send_message("Abrir andar 2")    
-                        
-                    elif mensagem['message'][0]['cod'] == 'estaciona':
+                
+                    if mensagem['message'].get('cod') == 'estaciona':
                         print(f'Carro andar 2 com ID {id_carro} estacionado na vaga {vaga_ocupada}')
                         lista_carros.append(Carro(id_carro, vaga_ocupada, datetime.now()))
-                    elif mensagem['message'][0]['cod'] == 'saida':
+                        self.send_message("Entrada permitida")
+                    elif mensagem['message'].get('cod') == 'saida':
                         for carro in lista_carros:
                             if carro.vaga == vaga_ocupada:
                                 print(f"O carro {carro.id_carro} está na vaga {carro.vaga}")
                                 lista_carros.remove(carro)
-                                # data_dif = datetime.now() - carro.data_hora_entrada
-                            
-
+                
                      
 
                 # Cálculo do valor total pago
