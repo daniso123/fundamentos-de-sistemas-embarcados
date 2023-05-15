@@ -38,17 +38,17 @@ class ServidorCentral:
     def iniciar_servidor(self):
         self.servidor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.servidor_socket.bind((self.endereco, self.porta))
-        self.servidor_socket.listen(5)
+        self.servidor_socket.listen(1)
         print(f"Servidor central iniciado em {self.endereco}:{self.porta}")
 
         while True:
             cliente, endereco = servidor.accept()
             if isinstance(cliente, socket.socket):
-                cliente_socket, cliente_endereco = self.servidor_socket.accept()
-                cliente_thread = threading.Thread(target=self.lidar_conexao, args=(cliente_socket,))
-                cliente_thread.start()
-                self.clientes.append((cliente_socket, cliente_endereco))
-                print(f"Novo cliente conectado: {cliente_endereco}")
+                cliente, endereco = self.servidor_socket.accept()
+                print(f"Novo cliente conectado: {endereco}")
+
+                thread_cliente = threading.Thread(target=self.lidar_conexao, args=(cliente,))
+                thread_cliente.start()
 
    
     def lidar_conexao(self, cliente_socket):
@@ -130,7 +130,7 @@ class ServidorCentral:
 
     def broadcast(self, message_dict, sender):
         for cliente in self.clientes:
-            if isinstance(cliente, socket.socket):
+            if cliente != sender:
                 cliente.send(json.dumps(message_dict).encode())
     
     def send_message(self, message):
