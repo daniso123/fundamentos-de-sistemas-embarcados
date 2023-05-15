@@ -40,9 +40,10 @@ carros_andar = 0; sinal1 = 0; id_carro = 0
 vagas = {'a1': 0, 'a2': 0, 'a3': 0, 'a4': 0, 'a5': 0, 'a6': 0, 'a7': 0, 'a8': 0}
 
 class Cliente:
-    def __init__(self, servidor, porta):
+    def __init__(self, servidor, porta,name):
         self.servidor = servidor
         self.porta = porta
+        self.name = name
         self.cliente_socket = None
 
     def leitura_sensor_vaga(self,endereco):
@@ -117,7 +118,7 @@ class Cliente:
 
    
     
-    def enviar_mensagem(self, codigo,mensagem, carros_andar, sinal1, vagas, id_carro, vaga_ocupada):
+    def enviar_mensagem(self, codigo, carros_andar, sinal1, vagas, id_carro, vaga_ocupada):
         dados = [{
                     "cod": codigo,
                     "carros_andar1": carros_andar,
