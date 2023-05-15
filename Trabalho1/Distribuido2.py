@@ -96,9 +96,9 @@ class Cliente:
                   #      vagas.append(endereco+1)
                 for i in range(8):
                     endereco = bin(i)[2:].zfill(3)  # Converte i para binário e adiciona zeros à esquerda para formar uma string de 3 dígitos
-                    GPIO.output(ENDERECO_01, (endereco & 0b001) == 0b001)
-                    GPIO.output(ENDERECO_02, (endereco & 0b010) == 0b010)
-                    GPIO.output(ENDERECO_03, (endereco & 0b100) == 0b100)
+                    GPIO.output(int(ENDERECO_01), (int(endereco) & 0b001) == 0b001)
+                    GPIO.output(int (ENDERECO_02), (int(endereco) & 0b010) == 0b010)
+                    GPIO.output(int(ENDERECO_03), (int(endereco)  & 0b100) == 0b100)
                     time.sleep(0.2)
                     ocupada = GPIO.input(SENSOR_DE_VAGA)
                     vg = 'a' + str(i+1)
