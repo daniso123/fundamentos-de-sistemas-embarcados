@@ -122,8 +122,8 @@ class Cliente:
         dados = [{
                     "cod": codigo,
                     "carros_andar1": carros_andar,
-                    "vagas": vagas,
                     "sinal1": sinal1,
+                    "vagas": vagas,
                     "id": id_carro,
                     "vaga_ocupada": vaga_ocupada
                  
