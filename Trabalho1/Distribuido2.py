@@ -55,6 +55,9 @@ class Cliente:
                         
 
     def iniciar_cliente(self):
+        global sinal1, carros_andar
+        global id_carro, sinal1, vagas, id_carro
+
         self.cliente_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.cliente_socket.connect((self.servidor, self.porta))
         print(f"Conectado ao servidor: {self.servidor}:{self.porta}")
@@ -72,8 +75,19 @@ class Cliente:
                 self.enviar_mensagem(envio)
                 
                 print("entrando um carro")
+
+                carros_andar = carros_andar + 1
                 
-                vagas = []
+                # Cria uma nova thread para enviar os números de carros no andar 1
+                codigo = "entrada"
+                self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, 0)
+                
+                # Verifica se o sensor de fechamento da cancela de entrada foi acionado
+                if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
+                    # Desativa o motor da cancela de entrada para fechar a cancela
+                    GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.LOW)
+                time.sleep(4)
+                
                 #for endereco in range(8):
                  #   if self.leitura_sensor_vaga(endereco):
                   #      vagas.append(endereco+1)
@@ -84,25 +98,25 @@ class Cliente:
                     GPIO.output(ENDERECO_03, (endereco & 0b100) == 0b100)
                     time.sleep(0.2)
                     ocupada = GPIO.input(SENSOR_DE_VAGA)
-                vg = 'a' + str(i+1)
-                print(f'vaga {vg} is {ocupada}')
-                if ocupada:
-                    if vagas[vg] == 0:
-                        print(f"Estacionando um carro na vaga {vg}")
-                        vagas[vg] = 1
-                        id_carro = 1
-                        codigo = 'estaciona'
-                        self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, vg)
-                        id_carro = 0
-                        break
-                    else:
-                        
-                        if vagas[vg] == 1:
-                            print(f"Saindo um carro da vaga {vg}")
-                            vagas[vg] = 0
-                            codigo = 'saida'
+                    vg = 'a' + str(i+1)
+                    print(f'vaga {vg} is {ocupada}')
+                    if ocupada:
+                        if vagas[vg] == 0:
+                            print(f"Estacionando um carro na vaga {vg}")
+                            vagas[vg] = 1
+                            id_carro = 1
+                            codigo = 'estaciona'
                             self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, vg)
+                            id_carro = 0
                             break
+                        else:
+
+                            if vagas[vg] == 1:
+                                print(f"Saindo um carro da vaga {vg}")
+                                vagas[vg] = 0
+                                codigo = 'saida'
+                                self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, vg)
+                                break
 
 
                 if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
@@ -133,7 +147,7 @@ class Cliente:
             "from": self.name,
             "message": dados
         }
-        self.socket.send(json.dumps(messages).encode())
+        self.cliente_socket.send(json.dumps(messages).encode())
         
 
     def receber_mensagens(self):
