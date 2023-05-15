@@ -1,14 +1,18 @@
 # Projeto 1 - FSE
 
-## Introdução
-
-Este trabalho tem por objetivo a criação de um sistema distribuído de automação predial para monitoramento e acionamento de sensores e dispositivos de um prédio com múltiplas salas. O sistema deve ser desenvolvido para funcionar em um conjunto de placas Raspberry Pi com um servidor central responsável pelo controle e interface com o usuário e servidores distribuídos para leitura e acionamento dos dispositivos. Dentre os dispositivos envolvidos estão o monitoramento de temperatura e umidade, sensores de presença, sensores de fumaça, sensores de contagem de pessoas, sensores de abertura e fechamento de portas e janelas, acionamento de lâmpadas, aparelhos de ar-condicionado, alarme e aspersores de água em caso de incêndio.
-
 ## Dados do Aluno
 
 | Nome                          | Matrícula  |
 | ----------------------------- | ---------- |
 | Daniela Soares de Oliveira | 18/0015222 |
+
+## Introdução
+
+Este trabalho tem por objetivo a criação de um sistema distribuído para o controle e monitoramento de estacionamentos comerciais. Dentre os itens controlados teremos a entrada e saída de veículos, a ocupação de cada vaga individualmente, a ocupação do estacionamento como um todo e a cobrança por tempo de permanência.
+O sistema deve ser desenvolvido para funcionar em um conjunto de placas Raspberry Pi com um servidor central responsável pelo controle e interface com o usuário e servidores distribuídos para o controle de todos os sensores e atuadores de cada andar do estacionamento.
+
+A Figura 1 mostra o layout do estacionamento.
+![Layout](assets/Estacionamento.png)
 
 ## Dependências
 
@@ -41,20 +45,16 @@ $ python3 Distribuido2.py
 
 **_OBS: Executar primeiro o servidor central e, em seguida, executar o servidor distribuído._**
 
-## Relatório - Dispositivos de Saída
 
-O log dos comandos acionados dos dispositivos de saída se encontra na pasta `Central/logs/data.csv`.
 
 ### Apresentação do Sistema Central
 
-![Servidor Central](assets/menu.png)
+
 
 ## Referências
 
-[DHT22](https://github.com/nebulx29/dht22)
+## Video
 
-[Biblioteca WiringPi GPIO](http://wiringpi.com/)
 
-[Raspberry Pi Pinout](https://pinout.xyz/)
 
-[Debounce](https://www.filipeflop.com/blog/debounce-o-que-e-e-como-resolver-via-software/)
+
