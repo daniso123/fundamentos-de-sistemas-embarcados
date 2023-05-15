@@ -95,7 +95,7 @@ class ServidorCentral:
                     else:
                         carros_andar2 = mensagem['message'][0].get('carros_andar2', 0)
                         # carros_andar2 = mensagem['message'][0]['carros_andar2']
-                        sinal2 = mensagem['message'][0]['sinal2']
+                        sinal2 = mensagem['message'][0].get('sinal2')
                         vagas2 = mensagem['message'][0]['vagas'] 
                         id_carro = id_carro + mensagem['message'][0]['id']
                         vaga_ocupada = mensagem['message'][0]['vaga_ocupada']
