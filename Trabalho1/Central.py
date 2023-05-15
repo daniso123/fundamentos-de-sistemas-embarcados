@@ -96,7 +96,7 @@ class ServidorCentral:
                         carros_andar2 = mensagem['message'][0].get('carros_andar2', 0)
                         # carros_andar2 = mensagem['message'][0]['carros_andar2']
                         sinal2 = mensagem['message'][0].get('sinal2')
-                        vagas2 = mensagem['message'][0]['vagas'] 
+                        vagas2 = mensagem['message'][0].get['vagas'] 
                         id_carro = id_carro + mensagem['message'][0]['id']
                         vaga_ocupada = mensagem['message'][0]['vaga_ocupada']
                         if carros_andar2 >= 8 and sinal2 == 0:
