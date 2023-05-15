@@ -88,7 +88,7 @@ class ServidorCentral:
                     vaga_ocupada = mensagem['message'].get('vaga_ocupada', '')
                     if (carros_andar1 + carros_andar2 >= 16 and sinal2 == 0) or (carros_andar2 >= 8 and sinal1 == 1):
                         self.send_message("Fechar andar 2")
-                
+
                     if mensagem['message'].get('cod') == 'estaciona':
                         print(f'Carro andar 2 com ID {id_carro} estacionado na vaga {vaga_ocupada}')
                         lista_carros.append(Carro(id_carro, vaga_ocupada, datetime.now()))
@@ -98,7 +98,7 @@ class ServidorCentral:
                             if carro.vaga == vaga_ocupada:
                                 print(f"O carro {carro.id_carro} está na vaga {carro.vaga}")
                                 lista_carros.remove(carro)
-                
+
                      
 
                 # Cálculo do valor total pago
@@ -123,6 +123,11 @@ class ServidorCentral:
 
     def enviar_mensagem_cliente(self, cliente_socket, mensagem):
         cliente_socket.send(json.dumps(mensagem).encode())
+        
+    def broadcast(self, message_dict, sender):
+        for cliente in self.clientes:
+            if cliente != sender:
+                cliente.send(json.dumps(message_dict).encode())
 
     def send_message(self, message):
       message_dict = {"from": "Server", "message": message}
