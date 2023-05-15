@@ -64,6 +64,7 @@ class Cliente:
 
         thread_recebimento = threading.Thread(target=self.receber_mensagens)
         thread_recebimento.start()
+        
 
         while True:
             
@@ -71,8 +72,9 @@ class Cliente:
             #ENTRADA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
                 GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.HIGH)
-                #envio = "O carro passou"
-                #self.enviar_mensagem(carros_andar, sinal1, vagas, id_carro, vaga_ocupada)
+                envio = "O carro passou"
+                vaga_ocupada= True
+                self.enviar_mensagem(envio, carros_andar,sinal1, vagas, id_carro, vaga_ocupada)
 
                 
                 print("entrando um carro")
