@@ -108,10 +108,22 @@ class Cliente:
         self.cliente_socket.send(json.dumps(messages).encode())
 
     def receber_mensagens(self):
+        #while True:
+        #    dados = self.cliente_socket.recv(1024).decode()
+         #   mensagem = json.loads(dados)
+          #  print(f"Mensagem recebida do servidor: {mensagem}")
+
         while True:
             dados = self.cliente_socket.recv(1024).decode()
-            mensagem = json.loads(dados)
-            print(f"Mensagem recebida do servidor: {mensagem}")
+            
+            if not dados:
+                continue  # Ignorar mensagens vazias
+            
+            try:
+                mensagem = json.loads(dados)
+                print(mensagem)
+            except json.JSONDecodeError as e:
+                print(f"Erro na decodificação da mensagem: {e}")
 
     def encerrar_cliente(self):
         self.cliente_socket.close()
