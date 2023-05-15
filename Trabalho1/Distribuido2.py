@@ -71,8 +71,9 @@ class Cliente:
             #ENTRADA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
                 GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.HIGH)
-                envio = "O carro passou"
-                self.enviar_mensagem(envio)
+                #envio = "O carro passou"
+                #self.enviar_mensagem(carros_andar, sinal1, vagas, id_carro, vaga_ocupada)
+
                 
                 print("entrando um carro")
 

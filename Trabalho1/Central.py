@@ -4,7 +4,7 @@ import threading
 from datetime import datetime
 import json
 
-arros_andar1 = 0; sinal1 = 0
+carros_andar1 = 0; sinal1 = 0
 vagas1 = {'a1': 0, 'a2': 0, 'a3': 0, 'a4': 0, 'a5': 0, 'a6': 0, 'a7': 0, 'a8': 0}
 carros_andar2= 0; sinal2= 0
 vagas2 = {'b1': 0, 'b2': 0, 'b3': 0, 'b4': 0, 'b5': 0, 'b6': 0, 'b7': 0, 'b8': 0}
@@ -60,7 +60,7 @@ class ServidorCentral:
                 if mensagem == "ping":
                     continue
                 # print(f"Received message from {message['from']}: {message['message']}")
-                global carros_andar1, sinal1, vagas1, carros_andar2, sinal2, vagas2, total_carros, id_carro, preco
+                global carros_andar1, sinal1, vagas1, carros_andar2, sinal2, vagas2, total_carros, id_carro
                 # Tratamento de mensagem adicionado
                 if mensagem['from'] == 'Client 1':
                     
