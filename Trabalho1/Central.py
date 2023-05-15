@@ -93,7 +93,8 @@ class ServidorCentral:
                     elif mensagem['message'] == 'saindo andar2':
                             self.send_message('saindo andar2')
                     else:
-                        carros_andar2 = mensagem['message'][0]['carros_andar2']
+                        carros_andar2 = mensagem['message'][0].get('carros_andar2', 0)
+                        # carros_andar2 = mensagem['message'][0]['carros_andar2']
                         sinal2 = mensagem['message'][0]['sinal2']
                         vagas2 = mensagem['message'][0]['vagas'] 
                         id_carro = id_carro + mensagem['message'][0]['id']
