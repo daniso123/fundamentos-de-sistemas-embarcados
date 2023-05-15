@@ -42,13 +42,11 @@ class ServidorCentral:
         print(f"Servidor central iniciado em {self.endereco}:{self.porta}")
 
         while True:
-            cliente, endereco = servidor.accept()
-            if isinstance(cliente, socket.socket):
-                cliente, endereco = self.servidor_socket.accept()
-                print(f"Novo cliente conectado: {endereco}")
-
-                thread_cliente = threading.Thread(target=self.lidar_conexao, args=(cliente,))
-                thread_cliente.start()
+            cliente_socket, cliente_endereco = self.servidor_socket.accept()
+            cliente_thread = threading.Thread(target=self.lidar_conexao, args=(cliente_socket))
+            cliente_thread.start()
+            self.clientes.append((cliente_socket, cliente_endereco))
+            print(f"Novo cliente conectado: {cliente_endereco}")
 
    
     def lidar_conexao(self, cliente_socket):
