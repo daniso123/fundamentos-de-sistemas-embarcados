@@ -38,19 +38,18 @@ class ServidorCentral:
     def iniciar_servidor(self):
         self.servidor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.servidor_socket.bind((self.endereco, self.porta))
-        self.servidor_socket.listen(1)
+        self.servidor_socket.listen(5)
         print(f"Servidor central iniciado em {self.endereco}:{self.porta}")
 
         while True:
             cliente_socket, cliente_endereco = self.servidor_socket.accept()
-            cliente_thread = threading.Thread(target=self.lidar_conexao, args=(cliente_socket))
+            cliente_thread = threading.Thread(target=self.lidar_conexao, args=(cliente_socket,))
             cliente_thread.start()
             self.clientes.append((cliente_socket, cliente_endereco))
             print(f"Novo cliente conectado: {cliente_endereco}")
 
    
     def lidar_conexao(self, cliente_socket):
-        
         while True:
             try:
                 dados = cliente_socket.recv(1024).decode()
@@ -64,41 +63,57 @@ class ServidorCentral:
                 global carros_andar1, sinal1, vagas1, carros_andar2, sinal2, vagas2, total_carros, id_carro
                 # Tratamento de mensagem adicionado
                 if mensagem['from'] == 'Client 1':
-                    carros_andar1 = mensagem['message'].get('carros_andar1', 0)
-                    sinal1 = mensagem['message'].get('sinal1', 0)
-                    vagas1 = mensagem['message'].get('vagas', {})
-                    id_carro = id_carro + mensagem['message'].get('id', 0)
-                    vaga_ocupada = mensagem['message'].get('vaga_ocupada', '')
+                    
+                    carros_andar1 = mensagem['message'][0]['carros_andar1']
+                    sinal1 = mensagem['message'][0]['sinal1']
+                    vagas1 = mensagem['message'][0]['vagas'] 
+                    id_carro = id_carro + mensagem['message'][0]['id']
+                    vaga_ocupada = mensagem['message'][0]['vaga_ocupada']
                     if (carros_andar1 + carros_andar2 >= 16 and sinal1 == 0) or (carros_andar1 >= 8 and sinal2 == 1):
                         self.send_message("Fechar andar 1")
-
-                    if mensagem['message'].get('cod') == 'estaciona':
+                
+                        
+                    if mensagem['message'][0]['cod'] == 'entrada':
+                        total_carros = total_carros + 1
+                    elif mensagem['message'][0]['cod'] == 'estaciona':
                         print(f'Carro andar 1 com ID {id_carro} estacionado na vaga {vaga_ocupada}')
                         lista_carros.append(Carro(id_carro, vaga_ocupada, datetime.now()))
-                        self.send_message("Entrada permitida")
-                    elif mensagem['message'].get('cod') == 'saida':
+                    elif mensagem['message'][0]['cod'] == 'saida':
                         for carro in lista_carros:
                             if carro.vaga == vaga_ocupada:
                                 print(f"O carro {carro.id_carro} está na vaga {carro.vaga}")
                                 lista_carros.remove(carro)
-                elif mensagem['from'] == 'Client 2':
-                    carros_andar2 = mensagem['message'].get('carros_andar2', 0)
-                    sinal2 = mensagem['message'].get('sinal2', 0)
-                    vagas2 = mensagem['message'].get('vagas', {})
-                    id_carro = id_carro + mensagem['message'].get('id', 0)
-                    vaga_ocupada = mensagem['message'].get('vaga_ocupada', '')
-                    if (carros_andar1 + carros_andar2 >= 16 and sinal2 == 0) or (carros_andar2 >= 8 and sinal1 == 1):
-                        self.send_message("Fechar andar 2")
+                                
 
-                    if mensagem['message'].get('cod') == 'estaciona':
+                elif mensagem['from'] == 'Client 2':
+                    if mensagem['message'] == 'entrando andar2':
+                        self.send_message('entrando andar2')
+                        print('entrando andar2')
+                elif mensagem['message'] == 'saindo andar2':
+                        self.send_message('saindo andar2')
+                else:
+                    carros_andar2 = mensagem['message'][0].get('carros_andar2', 0)
+                    # carros_andar2 = mensagem['message'][0]['carros_andar2']
+                    sinal2 = mensagem['message'][0].get('sinal2')
+                    vagas2 = mensagem['message'][0].get['vagas'] 
+                    id_carro = id_carro + mensagem['message'][0]['id']
+                    vaga_ocupada = mensagem['message'][0]['vaga_ocupada']
+                    if carros_andar2 >= 8 and sinal2 == 0:
+                        self.send_message("Fechar andar 2")
+                    
+                    # if carros_andar2 < 8:
+                    #     self.send_message("Abrir andar 2")    
+                        
+                    elif mensagem['message'][0]['cod'] == 'estaciona':
                         print(f'Carro andar 2 com ID {id_carro} estacionado na vaga {vaga_ocupada}')
                         lista_carros.append(Carro(id_carro, vaga_ocupada, datetime.now()))
-                        self.send_message("Entrada permitida")
-                    elif mensagem['message'].get('cod') == 'saida':
+                    elif mensagem['message'][0]['cod'] == 'saida':
                         for carro in lista_carros:
                             if carro.vaga == vaga_ocupada:
                                 print(f"O carro {carro.id_carro} está na vaga {carro.vaga}")
                                 lista_carros.remove(carro)
+                                # data_dif = datetime.now() - carro.data_hora_entrada
+                            
 
                      
 
@@ -124,16 +139,10 @@ class ServidorCentral:
 
     def enviar_mensagem_cliente(self, cliente_socket, mensagem):
         cliente_socket.send(json.dumps(mensagem).encode())
-    
 
-    def broadcast(self, message_dict, sender):
-        for cliente in self.clientes:
-            if cliente != sender:
-                cliente.send(json.dumps(message_dict).encode())
-    
     def send_message(self, message):
-        message_dict = {"message": message}
-        self.broadcast(message_dict, None)
+      message_dict = {"from": "Server", "message": message}
+      self.broadcast(message_dict, None)
 
     def enviar_mensagem_todos_clientes(self, mensagem):
         for cliente_socket, _ in self.clientes:
@@ -143,22 +152,10 @@ class ServidorCentral:
         self.servidor_socket.close()
 
 # Exemplo de uso
-#servidor = ServidorCentral("localhost", 10231)
-#.iniciar_servidor()
+servidor = ServidorCentral("localhost", 10231)
+servidor.iniciar_servidor()
 
-def main():
-    servidor = ServidorCentral("localhost", 10232)
-    servidor_thread = threading.Thread(target=servidor.iniciar_servidor)
 
-    # Outras threads, se houver
 
-    servidor_thread.start()
 
-    # Outras threads, se houver
 
-    servidor_thread.join()
-
-    # Outras threads, se houver
-
-if __name__ == "__main__":
-    main()
