@@ -66,7 +66,7 @@ class Cliente:
             # ENTRADA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
                 GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.HIGH)
-                #envio = "O carro passou"
+                codigo = "O carro passou"
                 vaga_ocupada = True
                 self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, vg)
                 # Cria uma nova thread para enviar os números de carros no andar 1
