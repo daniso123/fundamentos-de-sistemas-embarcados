@@ -152,8 +152,26 @@ class ServidorCentral:
         self.servidor_socket.close()
 
 # Exemplo de uso
-servidor = ServidorCentral("localhost", 10231)
-servidor.iniciar_servidor()
+#servidor = ServidorCentral("localhost", 10231)
+#servidor.iniciar_servidor()
+
+def main():
+    servidor = ServidorCentral("localhost", 10231)
+    servidor_thread = threading.Thread(target=servidor.iniciar_servidor)
+
+    # Outras threads, se houver
+
+    servidor_thread.start()
+
+    # Outras threads, se houver
+
+    servidor_thread.join()
+
+    # Outras threads, se houver
+
+if __name__ == "__main__":
+    main()
+
 
 
 
