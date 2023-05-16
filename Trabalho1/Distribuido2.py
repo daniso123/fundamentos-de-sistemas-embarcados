@@ -167,16 +167,23 @@ class Cliente:
 # cliente = Cliente("localhost", 10231, 'Client 1')
 # cliente.iniciar_cliente()
 
+
 def main():
     cliente = Cliente("localhost", 10232, 'Client 1')
-    cliente_thread = threading.Thread(target=cliente.iniciar_cliente)
-    cliente_thread.start()
+    servidor_thread = threading.Thread(target=cliente.iniciar_cliente)
 
-if __name__ == '__main__':
+    # Outras threads, se houver
+
+    servidor_thread.start()
+
+    # Outras threads, se houver
+
+    servidor_thread.join()
+
+    # Outras threads, se houver
+
+if __name__ == "__main__":
     main()
-
-
-
 
 ####################################Conexão com o servidor central############################################
 
