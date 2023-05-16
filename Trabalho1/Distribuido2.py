@@ -65,18 +65,13 @@ class Cliente:
         while True:
             # ENTRADA DE CARROS
             if GPIO.input(SENSOR_ABERTURA_CANCELA_ENTRADA) == GPIO.HIGH:
+                print("Entrando um carro")
+                # Ativa o motor da cancela de entrada para abrir a cancela
                 GPIO.output(MOTOR_CANCELA_ENTRADA, GPIO.HIGH)
-                codigo = "O carro passou"
-                vaga_ocupada = True
-                self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, vg)
-                # Cria uma nova thread para enviar os números de carros no andar 1
+                carros_andar1 = carros_andar1 + 1
                 codigo = "entrada"
-                self.enviar_mensagem(codigo, carros_andar, sinal1, vagas, id_carro, vaga_ocupada)
-
-                print("entrando um carro")
-
-                carros_andar += 1
-
+                self.enviar_mensagem(codigo, carros_andar1, sinal1, vagas, id_carro, 0)
+                
                 # Verifica se o sensor de fechamento da cancela de entrada foi acionado
                 if GPIO.wait_for_edge(SENSOR_FECHAMENTO_CANCELA_ENTRADA, GPIO.RISING):
                     # Desativa o motor da cancela de entrada para fechar a cancela
