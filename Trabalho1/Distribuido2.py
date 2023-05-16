@@ -164,8 +164,17 @@ class Cliente:
 
 # Exemplo de uso
 
-cliente = Cliente("localhost", 10231, 'Client 1')
-cliente.iniciar_cliente()
+#cliente = Cliente("localhost", 10231, 'Client 1')
+#cliente.iniciar_cliente()
+
+
+def main():
+    cliente = Cliente("localhost", 10231, 'Client 1')
+    cliente_thread = threading.Thread(target=cliente.iniciar_cliente)
+    cliente_thread.start()
+
+if __name__ == '__main__':
+    main()
 
 ####################################Conexão com o servidor central############################################
 
