@@ -147,7 +147,7 @@ class ServidorCentral:
 #.iniciar_servidor()
 
 def main():
-    servidor = ServidorCentral("localhost", 10231)
+    servidor = ServidorCentral("localhost", 10232)
     servidor_thread = threading.Thread(target=servidor.iniciar_servidor)
 
     # Outras threads, se houver
