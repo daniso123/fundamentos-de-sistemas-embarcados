@@ -45,16 +45,8 @@ $ python3 Distribuido2.py
 
 **_OBS: Executar primeiro o servidor central e, em seguida, executar o servidor distribuído._**
 
-
-
-### Apresentação do Sistema Central
-
-
-
-## Referências
-
 ## Video
-
+https://youtu.be/5bs1PhRHNPs
 
 
 
